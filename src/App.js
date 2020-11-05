@@ -9,6 +9,7 @@ import {
     Toolbar,
     Filter,
     Sort,
+    Group,
 } from "@syncfusion/ej2-react-grids";
 import data from "./disaster_data.json";
 
@@ -19,14 +20,18 @@ function App() {
         allowEditing: true,
         allowAdding: true,
         allowDeleting: true,
-        // mode: "Dialog",
-        // template: dialogTemplate,
+        mode: "Dialog",
+        template: dialogTemplate,
     };
     const toolbarOptions = ["Add", "Edit", "Delete", "Update", "Cancel"];
 
     const filterOptions = {
         ignoreAccent: true,
         type: "Menu",
+    };
+
+    const groupOptions = {
+        columns: ["Incident"],
     };
 
     function dialogTemplate(props) {
@@ -37,12 +42,14 @@ function App() {
             <GridComponent
                 dataSource={data}
                 allowPaging={true}
-                pageSettings={{ pageSize: 20 }}
+                pageSettings={{ pageSize: 100 }}
                 editSettings={editOptions}
                 toolbar={toolbarOptions}
-                allowFiltering={true}
+                allowFiltering
                 filterSettings={filterOptions}
                 allowSorting
+                allowGrouping
+                groupSettings={groupOptions}
             >
                 <ColumnsDirective>
                     <ColumnDirective
@@ -52,7 +59,11 @@ function App() {
                         format="yMd"
                         edit={false}
                     />
-                    <ColumnDirective field="District" editType="dropdownedit" />
+                    <ColumnDirective
+                        field="District"
+                        editType="dropdownedit"
+                        filter={{ type: "Checkbox" }}
+                    />
                     <ColumnDirective
                         field="Incident"
                         editType="dropdownedit"
