@@ -8,6 +8,7 @@ import {
     Edit,
     Toolbar,
     Filter,
+    Sort,
 } from "@syncfusion/ej2-react-grids";
 import data from "./disaster_data.json";
 
@@ -41,6 +42,7 @@ function App() {
                 toolbar={toolbarOptions}
                 allowFiltering={true}
                 filterSettings={filterOptions}
+                allowSorting
             >
                 <ColumnsDirective>
                     <ColumnDirective
@@ -51,15 +53,19 @@ function App() {
                         edit={false}
                     />
                     <ColumnDirective field="District" editType="dropdownedit" />
-                    <ColumnDirective field="Incident" editType="dropdownedit" />
+                    <ColumnDirective
+                        field="Incident"
+                        editType="dropdownedit"
+                        filter={{ type: "CheckBox" }}
+                    />
                     <ColumnDirective field="TotalDeath" />
                     <ColumnDirective field="MissingPeople" />
-                    <ColumnDirective field="AffectedFamily" />
-                    <ColumnDirective field="EstimatedLoss" />
+                    {/* <ColumnDirective field="AffectedFamily" />
+                    <ColumnDirective field="EstimatedLoss" /> */}
                     <ColumnDirective field="Injured" />
                     <ColumnDirective field="HousesDamaged" />
                 </ColumnsDirective>
-                <Inject services={[Page, Edit, Toolbar, Filter]} />
+                <Inject services={[Page, Edit, Toolbar, Filter, Sort]} />
             </GridComponent>
         </div>
     );
