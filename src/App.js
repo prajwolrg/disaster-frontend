@@ -10,12 +10,25 @@ import {
     Filter,
     Sort,
 } from "@syncfusion/ej2-react-grids";
-import data from "./disaster_data.json";
+// import data from "./disaster_data.json";
 
 import DialogForm from "./dialogForm";
 import { SelectionSettings } from "@syncfusion/ej2-react-dropdowns";
 
+import { getIncidents } from "./service";
+import { useEffect, useState } from "react";
+
 function App() {
+    const [data, setData] = useState();
+
+    useEffect(() => {
+        console.log("useEffect");
+        getIncidents().then((data) => {
+            setData(data);
+            console.log(data);
+        });
+    }, []);
+
     const editOptions = {
         allowEditing: true,
         allowAdding: true,
@@ -49,31 +62,6 @@ function App() {
                 allowSelection
                 selectionSettings={selectionOptions}
             >
-                <ColumnsDirective>
-                    <ColumnDirective
-                        field="IncidentDate"
-                        type="Date"
-                        editType="datepickeredit"
-                        format="yMd"
-                        edit={false}
-                    />
-                    <ColumnDirective
-                        field="District"
-                        editType="dropdownedit"
-                        filter={{ type: "Checkbox" }}
-                    />
-                    <ColumnDirective
-                        field="Incident"
-                        editType="dropdownedit"
-                        filter={{ type: "CheckBox" }}
-                    />
-                    <ColumnDirective field="TotalDeath" />
-                    <ColumnDirective field="MissingPeople" />
-                    {/* <ColumnDirective field="AffectedFamily" />
-                    <ColumnDirective field="EstimatedLoss" /> */}
-                    <ColumnDirective field="Injured" />
-                    <ColumnDirective field="HousesDamaged" />
-                </ColumnsDirective>
                 <Inject services={[Page, Edit, Toolbar, Filter, Sort]} />
             </GridComponent>
         </div>
