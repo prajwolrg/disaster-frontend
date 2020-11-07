@@ -164,7 +164,7 @@ const RegisterForm = (props) => {
                                                 ) {
                                                     setVisibility([
                                                         "none",
-                                                        "initial",
+                                                        "inline",
                                                         "none",
                                                     ]);
                                                 } else if (
@@ -174,7 +174,7 @@ const RegisterForm = (props) => {
                                                     setVisibility([
                                                         "none",
                                                         "none",
-                                                        "initial",
+                                                        "inline",
                                                     ]);
                                                 }
                                             }}
@@ -295,6 +295,30 @@ const RegisterForm = (props) => {
                                         variant="outlined"
                                         fullWidth={true}
                                     ></Field>
+                                    <FormControl
+                                        fullWidth={true}
+                                        variant="outlined"
+                                        style={{ margin: 10 }}
+                                    >
+                                        Source
+                                        <Field
+                                            component={Select}
+                                            name="sourceId"
+                                            inputProps={{
+                                                id: "sourceId",
+                                            }}
+                                        >
+                                            <MenuItem value="1">
+                                                Source 1
+                                            </MenuItem>
+                                            <MenuItem value="2">
+                                                Source 2
+                                            </MenuItem>
+                                            <MenuItem value="3">
+                                                Source 3
+                                            </MenuItem>
+                                        </Field>
+                                    </FormControl>
                                     <Field
                                         style={{ margin: 10 }}
                                         name="sourceID"
