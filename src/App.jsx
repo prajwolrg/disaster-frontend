@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { DataGrid, RowsProp, ColDef } from "@material-ui/data-grid";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import Icon from "@material-ui/core/Icon";
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
