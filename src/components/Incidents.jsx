@@ -26,12 +26,15 @@ const Incidents = () => {
   const {
     state: { allIncidents },
     getAllIncidents,
-    
+    deleteIncident,
   } = useContext(ApiContext);
 
   useEffect(() => {
     (async () => {
-      await getAllIncidents();
+      await getAllIncidents()
+      setInterval(async () => {
+        await getAllIncidents();
+      }, 3000);
     })();
   }, []);
 
@@ -50,6 +53,10 @@ const Incidents = () => {
   };
   const handleAddClose = () => {
     setAddOpen(false);
+  };
+  const handleDelete = async () => {
+    if (selected) await deleteIncident(selected.data.incidentID);
+    setSelected(null);
   };
   return (
     <>
@@ -73,32 +80,40 @@ const Incidents = () => {
             >
               Add
             </Button>
-            <Button
-              variant="contained"
-              className={classes.button}
-              startIcon={<EditIcon />}
-              disabled={!active}
-              onClick={handleEditOpen}
-            >
-              Edit
-            </Button>
-            <Button
-              variant="contained"
-              className={classes.button}
-              startIcon={<DeleteIcon />}
-              disabled={!active}
-            >
-              Delete
-            </Button>
+            {allIncidents && allIncidents.length > 0 && (
+              <>
+                <Button
+                  variant="contained"
+                  className={classes.button}
+                  startIcon={<EditIcon />}
+                  disabled={!active}
+                  onClick={handleEditOpen}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="contained"
+                  className={classes.button}
+                  startIcon={<DeleteIcon />}
+                  disabled={!active}
+                  onClick={handleDelete}
+                >
+                  Delete
+                </Button>
+              </>
+            )}
           </div>
           <AddDialog open={addOpen} onClose={handleAddClose}></AddDialog>
           {active ? (
             <>
-              <EditDialog
-                open={editOpen}
-                onClose={handleEditClose}
-                initialValues={selected}
-              ></EditDialog>
+              {selected && (
+                <EditDialog
+                  open={editOpen}
+                  onClose={handleEditClose}
+                  setSelected={setSelected}
+                  initialValues={selected}
+                ></EditDialog>
+              )}
             </>
           ) : (
             <></>

@@ -75,7 +75,6 @@ const getDistricts = (dispatch) => async () => {
   dispatch({ type: "loading" });
   try {
     const response = await disasterApi.get(`/district/view`);
-    console.log(response.data);
     dispatch({ type: "getDistricts", payload: response.data });
   } catch (err) {
     console.log(err);
@@ -134,6 +133,15 @@ const updateIncident = (dispatch) => async (id, values) => {
   }
   dispatch({ type: "loaded" });
 };
+const deleteIncident = (dispatch) => async (id) => {
+  dispatch({ type: "loading" });
+  try {
+    await disasterApi.delete(`/incident/delete/${id}`);
+  } catch (err) {
+    console.log(err);
+  }
+  dispatch({ type: "loaded" });
+};
 
 export const { Context, Provider } = createDataContext(
   reducer,
@@ -147,6 +155,7 @@ export const { Context, Provider } = createDataContext(
     getVMsForDistrict,
     addIncident,
     updateIncident,
+    deleteIncident,
     getDisasterTypeNames,
   },
   {

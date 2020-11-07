@@ -3,7 +3,6 @@ import {
   CardContent,
   Button,
   Typography,
-
   Container,
   Avatar,
 } from "@material-ui/core";
@@ -104,10 +103,11 @@ const RegisterForm = (props) => {
                 incidentDate: "",
               }}
               validationSchema={IncidentSchema}
-              onSubmit={async(values) => {
+              onSubmit={async (values, action) => {
                 delete values.districtName;
-                await addIncident(values)
-                handleClose()
+                await addIncident(values);
+                action.resetForm();
+                handleClose();
               }}
             >
               {(props) => (
