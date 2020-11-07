@@ -176,10 +176,7 @@ export default function App() {
         <>
             <div style={{ height: 800, width: "90%" }}>
                 <DataGrid
-                    rows={data.map((lol) => {
-                        lol["id"] = lol.incidentID;
-                        return lol;
-                    })}
+                    rows={data.map((lol) => ({ ...lol, id: lol.incidentID }))}
                     columns={columns}
                     onRowSelected={handleRowSelected}
                     checkboxSelection
