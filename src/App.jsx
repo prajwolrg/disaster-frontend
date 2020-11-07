@@ -155,7 +155,6 @@ export default function App() {
     const [active, setActive] = useState(false);
     const [addOpen, setAddOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
-    const [deleteOpen, setDeleteOpen] = useState(false);
 
     const handleRowSelected = (props) => {
         setSelected(props);
