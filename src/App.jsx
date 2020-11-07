@@ -7,8 +7,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 // import data from "./dataSource.json";
 import { Dialog, DialogTitle } from "@material-ui/core";
-import AddDialog from "./addPage";
-import EditDialog from "./editPage";
+import AddDialog from "./components/addPage";
+import EditDialog from "./components/editPage";
 
 const data = [
     {
