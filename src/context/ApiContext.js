@@ -11,6 +11,8 @@ const reducer = (state, action) => {
       return { ...state, earthquakeIncidents: action.payload };
     case "getFireIncidents":
       return { ...state, fireIncidents: action.payload };
+    case "getDisasterTypeNames":
+      return { ...state, disasterTypeNames: action.payload };
     case "getDistricts":
       return { ...state, districts: action.payload };
     case "getSources":
@@ -29,7 +31,7 @@ const reducer = (state, action) => {
 const getAllIncidents = (dispatch) => async () => {
   dispatch({ type: "loading" });
   try {
-    const response = await disasterApi.get("/incident/view");
+    const response = await disasterApi.get("/");
     dispatch({ type: "getAllIncidents", payload: response.data });
   } catch (err) {
     console.log(err);
@@ -69,10 +71,11 @@ const getFireIncidents = (dispatch) => async () => {
   dispatch({ type: "loaded" });
 };
 
-const getDistricts = (dispatch) => async (id) => {
+const getDistricts = (dispatch) => async () => {
   dispatch({ type: "loading" });
   try {
-    const response = await disasterApi.get(`/incident/view}`);
+    const response = await disasterApi.get(`/district/view`);
+    console.log(response.data);
     dispatch({ type: "getDistricts", payload: response.data });
   } catch (err) {
     console.log(err);
@@ -85,6 +88,16 @@ const getSources = (dispatch) => async () => {
   try {
     const response = await disasterApi.get("/datasource/view");
     dispatch({ type: "getSources", payload: response.data });
+  } catch (err) {
+    console.log(err);
+  }
+  dispatch({ type: "loaded" });
+};
+const getDisasterTypeNames = (dispatch) => async () => {
+  dispatch({ type: "loading" });
+  try {
+    const response = await disasterApi.get("/disastertype/view");
+    dispatch({ type: "getDisasterTypeNames", payload: response.data });
   } catch (err) {
     console.log(err);
   }
@@ -134,6 +147,7 @@ export const { Context, Provider } = createDataContext(
     getVMsForDistrict,
     addIncident,
     updateIncident,
+    getDisasterTypeNames,
   },
   {
     allIncidents: null,
@@ -143,6 +157,7 @@ export const { Context, Provider } = createDataContext(
     districts: null,
     sources: null,
     VMsForDistrict: null,
+    disasterTypeNames: null,
     isLoading: false,
   }
 );
