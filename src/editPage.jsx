@@ -78,17 +78,93 @@ const RegisterForm = (props) => {
                             <Form>
                                 <Field
                                     style={{ margin: 10 }}
-                                    name="CustomerID"
+                                    name="incidentDate"
                                     component={TextField}
-                                    label="Customer ID"
+                                    type="Date"
+                                    label="Incident Date"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                     variant="outlined"
                                     fullWidth={true}
                                 ></Field>
                                 <Field
                                     style={{ margin: 10 }}
-                                    name="Freight"
+                                    name="totalDeath"
+                                    type="number"
                                     component={TextField}
-                                    label="Freight"
+                                    label="Total Death"
+                                    variant="outlined"
+                                    fullWidth={true}
+                                ></Field>
+                                <Field
+                                    style={{ margin: 10 }}
+                                    name="missingPeople"
+                                    type="number"
+                                    component={TextField}
+                                    label="Missing People"
+                                    variant="outlined"
+                                    fullWidth={true}
+                                ></Field>
+                                <Field
+                                    style={{ margin: 10 }}
+                                    name="disasterTypeName"
+                                    component={TextField}
+                                    label="Disaster Type Name"
+                                    variant="outlined"
+                                    fullWidth={true}
+                                ></Field>
+                                <Field
+                                    style={{ margin: 10 }}
+                                    name="estimatedLoss"
+                                    type="number"
+                                    component={TextField}
+                                    label="Estimated Loss"
+                                    variant="outlined"
+                                    fullWidth={true}
+                                ></Field>
+                                <Field
+                                    style={{ margin: 10 }}
+                                    name="injured"
+                                    type="number"
+                                    component={TextField}
+                                    label="Injured"
+                                    variant="outlined"
+                                    fullWidth={true}
+                                ></Field>
+                                <Field
+                                    style={{ margin: 10 }}
+                                    name="propertyLoss"
+                                    type="number"
+                                    component={TextField}
+                                    label="Property Loss"
+                                    variant="outlined"
+                                    fullWidth={true}
+                                ></Field>
+                                <Field
+                                    style={{ margin: 10 }}
+                                    name="damagedHouses"
+                                    type="number"
+                                    component={TextField}
+                                    label="Damaged Houses"
+                                    variant="outlined"
+                                    fullWidth={true}
+                                ></Field>
+                                <Field
+                                    style={{ margin: 10 }}
+                                    name="sourceID"
+                                    type="number"
+                                    component={TextField}
+                                    label="Source ID"
+                                    variant="outlined"
+                                    fullWidth={true}
+                                ></Field>
+                                <Field
+                                    style={{ margin: 10 }}
+                                    name="locationId"
+                                    type="number"
+                                    component={TextField}
+                                    label="Location ID"
                                     variant="outlined"
                                     fullWidth={true}
                                 ></Field>

@@ -87,8 +87,66 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const columns = [
-    { field: "districtName", headerName: "District Name", width: 150 },
-    { field: "disasterTypeName", headerName: "Disaster Type Name", width: 150 },
+    {
+        field: "incidentDate",
+        headerName: "Incident Date",
+        width: 150,
+        type: "date",
+    },
+    {
+        field: "totalDeath",
+        headerName: "Total Death",
+        width: 150,
+        type: "number",
+    },
+    {
+        field: "missingPeople",
+        headerName: "Missing People",
+        width: 150,
+        type: "number",
+    },
+    {
+        field: "disasterTypeName",
+        headerName: "Disaster Type Name",
+        width: 150,
+        type: "string",
+    },
+    {
+        field: "estimatedLoss",
+        headerName: "Estimated Loss",
+        width: 150,
+        type: "number",
+    },
+    {
+        field: "injured",
+        headerName: "Injured",
+        width: 150,
+        type: "number",
+    },
+    {
+        field: "propertyLoss",
+        headerName: "Property Loss",
+        width: 150,
+        type: "number",
+    },
+    {
+        field: "damagedHouses",
+        headerName: "Damaged Houses",
+        width: 150,
+        type: "number",
+    },
+    {
+        field: "locationID",
+        headerName: "Location ID",
+        width: 150,
+        type: "number",
+    },
+    {
+        field: "sourceID",
+        headerName: "Source ID",
+        width: 150,
+        type: "number",
+    },
 ];
 
 export default function App() {
@@ -119,9 +177,13 @@ export default function App() {
         <>
             <div style={{ height: 800, width: "90%" }}>
                 <DataGrid
-                    rows={{ ...data, id: data.incidentID }}
+                    rows={data.map((lol) => {
+                        lol["id"] = lol.incidentID;
+                        return lol;
+                    })}
                     columns={columns}
                     onRowSelected={handleRowSelected}
+                    checkboxSelection
                 />
             </div>
             <div>
@@ -152,12 +214,9 @@ export default function App() {
                     Delete
                 </Button>
             </div>
+            <AddDialog open={addOpen} onClose={handleAddClose}></AddDialog>
             {active ? (
                 <>
-                    <AddDialog
-                        open={addOpen}
-                        onClose={handleAddClose}
-                    ></AddDialog>
                     <EditDialog
                         open={editOpen}
                         onClose={handleEditClose}
