@@ -90,7 +90,7 @@ const columns = [
         field: "incidentDate",
         headerName: "Incident Date",
         width: 150,
-        type: "date",
+        type: "dateTime",
     },
     {
         field: "totalDeath",
