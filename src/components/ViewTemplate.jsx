@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ViewTemplate = ({ incidents, columns }) => {
+const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
   const classes = useStyles();
   const [selected, setSelected] = useState();
   const [active, setActive] = useState(false);
@@ -94,7 +94,11 @@ const ViewTemplate = ({ incidents, columns }) => {
               </>
             )}
           </div>
-          <AddIncident open={addOpen} onClose={handleAddClose}></AddIncident>
+          <AddIncident
+            open={addOpen}
+            onClose={handleAddClose}
+            disasterTypeName={disasterTypeName}
+          />
           {active ? (
             <>
               {selected && (

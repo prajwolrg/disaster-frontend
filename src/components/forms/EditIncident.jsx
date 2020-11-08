@@ -132,7 +132,7 @@ const EditIncident = (props) => {
                     }}
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="totalDeath"
@@ -141,7 +141,7 @@ const EditIncident = (props) => {
                     label="Total Death"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="missingPeople"
@@ -150,7 +150,7 @@ const EditIncident = (props) => {
                     label="Missing People"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="affectedFamily"
@@ -159,7 +159,7 @@ const EditIncident = (props) => {
                     label="Affected Family"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="disasterTypeName"
@@ -168,7 +168,7 @@ const EditIncident = (props) => {
                     variant="outlined"
                     fullWidth={true}
                     disabled
-                  ></Field>
+                  />
 
                   <Field
                     style={{
@@ -181,7 +181,7 @@ const EditIncident = (props) => {
                     label="Richter Magnitude"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{
                       margin: 10,
@@ -192,7 +192,7 @@ const EditIncident = (props) => {
                     label="Epicenter"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{
                       margin: 10,
@@ -203,7 +203,7 @@ const EditIncident = (props) => {
                     label="Cause of Fire"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{
                       margin: 10,
@@ -214,7 +214,7 @@ const EditIncident = (props) => {
                     label="Origin"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{
                       margin: 10,
@@ -226,7 +226,7 @@ const EditIncident = (props) => {
                     label="Height"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{
                       margin: 10,
@@ -238,7 +238,7 @@ const EditIncident = (props) => {
                     label="Cattle Loss"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="estimatedLoss"
@@ -247,7 +247,7 @@ const EditIncident = (props) => {
                     label="Estimated Loss"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="injured"
@@ -256,7 +256,7 @@ const EditIncident = (props) => {
                     label="Injured"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="propertyLoss"
@@ -265,7 +265,7 @@ const EditIncident = (props) => {
                     label="Property Loss"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="damagedHouses"
@@ -274,7 +274,7 @@ const EditIncident = (props) => {
                     label="Damaged Houses"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <FormControl
                     fullWidth={true}
                     variant="outlined"

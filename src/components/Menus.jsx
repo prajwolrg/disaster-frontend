@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleBottomNavigation() {
+export default function Menus() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -40,7 +40,7 @@ export default function SimpleBottomNavigation() {
       </NavLink>
 
       <NavLink to="/earthquake" className={classes.link}>
-        <BottomNavigationAction label="EARTHQAKE" showLabel />
+        <BottomNavigationAction label="EARTHQUAKE" showLabel />
       </NavLink>
     </BottomNavigation>
   );

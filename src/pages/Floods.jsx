@@ -20,10 +20,13 @@ const Floods = () => {
 
   return (
     <>
-      <ViewTemplate incidents={floodIncidents} columns={FLOOD_COLUMNS} />
+      <ViewTemplate
+        incidents={floodIncidents}
+        columns={FLOOD_COLUMNS}
+        disasterTypeName="Flood"
+      />
     </>
   );
 };
 
 export default Floods;
-

@@ -81,7 +81,7 @@ const AddSource = (props) => {
                                     label="Name"
                                     variant="outlined"
                                     fullWidth={true}
-                                ></Field>
+                                />
                                 <Field
                                     style={{ margin: 10 }}
                                     name="website"
@@ -89,7 +89,7 @@ const AddSource = (props) => {
                                     label="Website"
                                     variant="outlined"
                                     fullWidth={true}
-                                ></Field>
+                                />
                                 <Button
                                     style={{ margin: 10 }}
                                     type="submit"

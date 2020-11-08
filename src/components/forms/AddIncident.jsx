@@ -55,9 +55,8 @@ const IncidentSchema = Yup.object().shape({
   sourceID: Yup.number().required("Required"),
 });
 
-const AddIncident = (props) => {
+const AddIncident = ({ open, onClose, disasterTypeName }) => {
   const classes = useStyles();
-  const { open, onClose } = props;
 
   const {
     state: { districts, VMsForDistrict, sources, disasterTypeNames },
@@ -73,8 +72,16 @@ const AddIncident = (props) => {
       await getDistricts();
       await getSources();
       await getDisasterTypeNames();
+
+      if (disasterTypeName === "Flood") {
+        setVisibility(["initial", "none", "none"]);
+      } else if (disasterTypeName === "Fire") {
+        setVisibility(["none", "initial", "none"]);
+      } else if (disasterTypeName === "Earthquake") {
+        setVisibility(["none", "none", "initial"]);
+      } else setVisibility(["none", "none", "none"]);
     })();
-  }, []);
+  }, [disasterTypeName]);
 
   const handleClose = () => {
     onClose();
@@ -98,8 +105,9 @@ const AddIncident = (props) => {
           <CardContent>
             <Formik
               initialValues={{
+                incidentDate: today,
                 districtName: "",
-                disasterTypeName: "",
+                disasterTypeName: disasterTypeName || "",
                 incidentDate: "",
               }}
               validationSchema={IncidentSchema}
@@ -123,7 +131,7 @@ const AddIncident = (props) => {
                     }}
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="totalDeath"
@@ -132,7 +140,7 @@ const AddIncident = (props) => {
                     label="Total Death"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="missingPeople"
@@ -141,7 +149,7 @@ const AddIncident = (props) => {
                     label="Missing People"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <FormControl
                     fullWidth={true}
                     variant="outlined"
@@ -151,6 +159,7 @@ const AddIncident = (props) => {
                     <Field
                       component={Select}
                       name="disasterTypeName"
+                      disabled={!!disasterTypeName}
                       inputProps={{
                         id: "disasterTypeName",
                       }}
@@ -190,7 +199,7 @@ const AddIncident = (props) => {
                     label="Richter Magnitude"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{
                       margin: 10,
@@ -201,7 +210,7 @@ const AddIncident = (props) => {
                     label="Epicenter"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{
                       margin: 10,
@@ -212,7 +221,7 @@ const AddIncident = (props) => {
                     label="Cause of Fire"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{
                       margin: 10,
@@ -223,7 +232,7 @@ const AddIncident = (props) => {
                     label="Origin"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{
                       margin: 10,
@@ -235,7 +244,7 @@ const AddIncident = (props) => {
                     label="Height"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{
                       margin: 10,
@@ -247,7 +256,7 @@ const AddIncident = (props) => {
                     label="Cattle Loss"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="estimatedLoss"
@@ -256,7 +265,7 @@ const AddIncident = (props) => {
                     label="Estimated Loss"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="injured"
@@ -265,7 +274,7 @@ const AddIncident = (props) => {
                     label="Injured"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="propertyLoss"
@@ -274,7 +283,7 @@ const AddIncident = (props) => {
                     label="Property Loss"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="affectedFamily"
@@ -283,7 +292,7 @@ const AddIncident = (props) => {
                     label="Affected Family"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <Field
                     style={{ margin: 10 }}
                     name="damagedHouses"
@@ -292,7 +301,7 @@ const AddIncident = (props) => {
                     label="Damaged Houses"
                     variant="outlined"
                     fullWidth={true}
-                  ></Field>
+                  />
                   <FormControl
                     fullWidth={true}
                     variant="outlined"

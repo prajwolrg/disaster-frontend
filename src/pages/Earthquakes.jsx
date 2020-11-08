@@ -20,7 +20,11 @@ const Earthquakes = () => {
 
   return (
     <>
-      <ViewTemplate incidents={earthquakeIncidents} columns={EARTHQUAKE_COLUMNS} />
+      <ViewTemplate
+        incidents={earthquakeIncidents}
+        columns={EARTHQUAKE_COLUMNS}
+        disasterTypeName="Earthquake"
+      />
     </>
   );
 };

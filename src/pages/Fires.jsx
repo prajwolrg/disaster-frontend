@@ -20,7 +20,11 @@ const Fires = () => {
 
   return (
     <>
-      <ViewTemplate incidents={fireIncidents} columns={FIRE_COLUMNS} />
+      <ViewTemplate
+        incidents={fireIncidents}
+        columns={FIRE_COLUMNS}
+        disasterTypeName="Fire"
+      />
     </>
   );
 };
