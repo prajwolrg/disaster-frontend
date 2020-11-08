@@ -90,3 +90,49 @@ export const INCIDENT_COLUMNS = [
     type: "number",
   },
 ];
+
+export const FIRE_COLUMNS = [
+  ...INCIDENT_COLUMNS,
+  {
+    field: "cause",
+    headerName: "Cause",
+    width: 150,
+    type: "string",
+  },
+];
+export const EARTHQUAKE_COLUMNS = [
+  ...INCIDENT_COLUMNS,
+  {
+    field: "richterMagnitude",
+    headerName: "Richter Magnitude",
+    width: 150,
+    type: "number",
+  },
+  {
+    field: "epicenter",
+    headerName: "Epicenter",
+    width: 150,
+    type: "string",
+  },
+];
+export const FLOOD_COLUMNS = [
+  ...INCIDENT_COLUMNS,
+  {
+    field: "cattleLoss",
+    headerName: "Cattle Loss",
+    width: 150,
+    type: "number",
+  },
+  {
+    field: "origin",
+    headerName: "Origin",
+    width: 150,
+    type: "string",
+  },
+  {
+    field: "height",
+    headerName: "Height",
+    width: 150,
+    type: "string",
+  },
+];

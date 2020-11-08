@@ -1,14 +1,14 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useState, useContext } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import AddDialog from "./addPage";
-import EditDialog from "./editPage";
+import AddIncident from "../components/forms/AddIncident";
+import EditIncident from "../components/forms/EditIncident";
+import { makeStyles } from "@material-ui/core/styles";
+
 import { Context as ApiContext } from "../context/ApiContext";
-import { INCIDENT_COLUMNS } from "../constants/KEYS";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -16,27 +16,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Incidents = () => {
+const ViewTemplate = ({ incidents, columns }) => {
   const classes = useStyles();
   const [selected, setSelected] = useState();
   const [active, setActive] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
 
-  const {
-    state: { allIncidents },
-    getAllIncidents,
-    deleteIncident,
-  } = useContext(ApiContext);
-
-  useEffect(() => {
-    (async () => {
-      await getAllIncidents()
-      setInterval(async () => {
-        await getAllIncidents();
-      }, 3000);
-    })();
-  }, []);
+  const { deleteIncident } = useContext(ApiContext);
 
   const handleRowSelected = (props) => {
     setSelected(props);
@@ -58,14 +45,18 @@ const Incidents = () => {
     if (selected) await deleteIncident(selected.data.incidentID);
     setSelected(null);
   };
+
   return (
     <>
-      {allIncidents && (
+      {incidents && (
         <>
           <div style={{ height: 800, width: "90%" }}>
             <DataGrid
-              rows={allIncidents.map((lol) => ({ ...lol, id: lol.incidentID }))}
-              columns={INCIDENT_COLUMNS}
+              rows={incidents.map((incident) => ({
+                ...incident,
+                id: incident.incidentID,
+              }))}
+              columns={columns}
               onRowSelected={handleRowSelected}
               checkboxSelection
             />
@@ -80,7 +71,7 @@ const Incidents = () => {
             >
               Add
             </Button>
-            {allIncidents && allIncidents.length > 0 && (
+            {incidents && incidents.length > 0 && (
               <>
                 <Button
                   variant="contained"
@@ -103,16 +94,16 @@ const Incidents = () => {
               </>
             )}
           </div>
-          <AddDialog open={addOpen} onClose={handleAddClose}></AddDialog>
+          <AddIncident open={addOpen} onClose={handleAddClose}></AddIncident>
           {active ? (
             <>
               {selected && (
-                <EditDialog
+                <EditIncident
                   open={editOpen}
                   onClose={handleEditClose}
                   setSelected={setSelected}
                   initialValues={selected}
-                ></EditDialog>
+                ></EditIncident>
               )}
             </>
           ) : (
@@ -124,4 +115,4 @@ const Incidents = () => {
   );
 };
 
-export default Incidents;
+export default ViewTemplate;

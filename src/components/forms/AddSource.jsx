@@ -39,7 +39,7 @@ const SourceSchema = Yup.object().shape({
     website: Yup.string().url().required(),
 });
 
-const RegisterForm = (props) => {
+const AddSource = (props) => {
     const classes = useStyles();
     const { open, onClose } = props;
 
@@ -109,4 +109,4 @@ const RegisterForm = (props) => {
     );
 };
 
-export default RegisterForm;
+export default AddSource;

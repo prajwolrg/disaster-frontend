@@ -17,7 +17,7 @@ import * as Yup from "yup";
 
 import { Field, Form, Formik } from "formik";
 import { TextField, Select } from "formik-material-ui";
-import { Context as ApiContext } from "../context/ApiContext";
+import { Context as ApiContext } from "../../context/ApiContext";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -55,7 +55,7 @@ const IncidentSchema = Yup.object().shape({
   sourceID: Yup.number().required("Required"),
 });
 
-const RegisterForm = (props) => {
+const EditIncident = (props) => {
   const classes = useStyles();
   const { open, onClose, initialValues } = props;
 
@@ -372,4 +372,4 @@ const RegisterForm = (props) => {
   );
 };
 
-export default RegisterForm;
+export default EditIncident;

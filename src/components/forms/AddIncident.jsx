@@ -17,7 +17,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { Field, Form, Formik } from "formik";
 import { TextField, Select } from "formik-material-ui";
 import * as Yup from "yup";
-import { Context as ApiContext } from "../context/ApiContext";
+import { Context as ApiContext } from "../../context/ApiContext";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -55,7 +55,7 @@ const IncidentSchema = Yup.object().shape({
   sourceID: Yup.number().required("Required"),
 });
 
-const RegisterForm = (props) => {
+const AddIncident = (props) => {
   const classes = useStyles();
   const { open, onClose } = props;
 
@@ -162,10 +162,10 @@ const RegisterForm = (props) => {
                         if (p.target.value === "Flood") {
                           setVisibility(["initial", "none", "none"]);
                         } else if (p.target.value === "Fire") {
-                          setVisibility(["none", "inline", "none"]);
+                          setVisibility(["none", "initial", "none"]);
                         } else if (p.target.value === "Earthquake") {
-                          setVisibility(["none", "none", "inline"]);
-                        }
+                          setVisibility(["none", "none", "initial"]);
+                        } else setVisibility(["none", "none", "none"]);
                       }}
                     >
                       {disasterTypeNames &&
@@ -390,4 +390,4 @@ const RegisterForm = (props) => {
   );
 };
 
-export default RegisterForm;
+export default AddIncident;
