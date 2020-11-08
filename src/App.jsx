@@ -1,10 +1,13 @@
+import { Container } from "@material-ui/core";
 import React from "react";
 import Incidents from "./components/Incidents";
 
 const App = () => {
   return (
     <>
-      <Incidents />
+      <Container maxWidth='xl'>
+        <Incidents />
+      </Container>
     </>
   );
 };
