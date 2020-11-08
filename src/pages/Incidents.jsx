@@ -9,7 +9,6 @@ import {
 } from "../constants/COLUMNS";
 import ViewTemplate from "../components/ViewTemplate";
 
-let subscriber;
 const getColumns = (type) => {
   switch (type) {
     case "Earthquake":
@@ -29,21 +28,16 @@ const Incidents = () => {
     setType(event.target.value);
   };
   const {
-    state: { allIncidents, typeIncidents, disasterTypeNames },
+    state: { allIncidents, disasterTypeNames },
     getAllIncidents,
-    getIncidentsByType,
     getDisasterTypeNames,
   } = useContext(ApiContext);
 
-  useEffect(() => {
-    if (subscriber) clearInterval(subscriber);
-    (async () => {
-      (await type) === "All" ? getAllIncidents() : getIncidentsByType(type);
-      subscriber = setInterval(async () => {
-        (await type) === "All" ? getAllIncidents() : getIncidentsByType(type);
-      }, 3000);
-    })();
-  }, [type]);
+  useEffect(async () => {
+    await getAllIncidents();
+  }, []);
+
+  useEffect(()=>{},[allIncidents]);
 
   useEffect(async () => {
     await getDisasterTypeNames();
@@ -61,9 +55,13 @@ const Incidents = () => {
           ))}
       </Select>
       <ViewTemplate
-        incidents={type === "All" ? allIncidents : typeIncidents}
+        incidents={
+          type === "All"
+            ? allIncidents
+            : allIncidents.filter((elem) => elem.disasterTypeName === type)
+        }
         columns={getColumns(type)}
-        disasterTypeName={type==="All"?null:type}
+        disasterTypeName={type === "All" ? null : type}
       />
     </Container>
   );

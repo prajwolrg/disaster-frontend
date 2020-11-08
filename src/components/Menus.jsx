@@ -17,31 +17,31 @@ const useStyles = makeStyles({
 export default function Menus() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  return <></>
+  // return (
+  //   (<BottomNavigation
+  //     value={value}
+  //     onChange={(event, newValue) => {
+  //       setValue(newValue);
+  //     }}
+  //     showLabels
+  //     className={classes.root}
+  //   >
+  //     <NavLink to="/" className={classes.link}>
+  //       <BottomNavigationAction label="HOME" showLabel />
+  //     </NavLink>
 
-  return (
-    <BottomNavigation
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
-      showLabels
-      className={classes.root}
-    >
-      <NavLink to="/" className={classes.link}>
-        <BottomNavigationAction label="HOME" showLabel />
-      </NavLink>
+  //     <NavLink to="/flood" className={classes.link}>
+  //       <BottomNavigationAction label="FLOOD" showLabel />
+  //     </NavLink>
 
-      <NavLink to="/flood" className={classes.link}>
-        <BottomNavigationAction label="FLOOD" showLabel />
-      </NavLink>
+  //     <NavLink to="/fire" className={classes.link}>
+  //       <BottomNavigationAction label="FIRE" showLabel />
+  //     </NavLink>
 
-      <NavLink to="/fire" className={classes.link}>
-        <BottomNavigationAction label="FIRE" showLabel />
-      </NavLink>
-
-      <NavLink to="/earthquake" className={classes.link}>
-        <BottomNavigationAction label="EARTHQUAKE" showLabel />
-      </NavLink>
-    </BottomNavigation>
-  );
+  //     <NavLink to="/earthquake" className={classes.link}>
+  //       <BottomNavigationAction label="EARTHQUAKE" showLabel />
+  //     </NavLink>
+  //   </BottomNavigation>)
+  // );
 }

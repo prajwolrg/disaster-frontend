@@ -5,12 +5,6 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "getAllIncidents":
       return { ...state, allIncidents: action.payload };
-    case "getFloodIncidents":
-      return { ...state, floodIncidents: action.payload };
-    case "getEarthquakeIncidents":
-      return { ...state, earthquakeIncidents: action.payload };
-    case "getFireIncidents":
-      return { ...state, fireIncidents: action.payload };
     case "getIncidentsByType":
       return { ...state, typeIncidents: action.payload };
     case "getDisasterTypeNames":
@@ -131,6 +125,7 @@ const addIncident = (dispatch) => async (values) => {
   dispatch({ type: "loading" });
   try {
     await disasterApi.post("/incident/insert", values);
+    getAllIncidents(dispatch)();
   } catch (err) {
     console.log(err);
   }
@@ -141,6 +136,7 @@ const updateIncident = (dispatch) => async (id, values) => {
   dispatch({ type: "loading" });
   try {
     await disasterApi.patch(`/incident/update/${id}`, values);
+    getAllIncidents(dispatch)();
   } catch (err) {
     console.log(err);
   }
@@ -150,6 +146,7 @@ const deleteIncident = (dispatch) => async (id) => {
   dispatch({ type: "loading" });
   try {
     await disasterApi.delete(`/incident/delete/${id}`);
+    getAllIncidents(dispatch)();
   } catch (err) {
     console.log(err);
   }
