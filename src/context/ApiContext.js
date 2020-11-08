@@ -11,6 +11,8 @@ const reducer = (state, action) => {
       return { ...state, earthquakeIncidents: action.payload };
     case "getFireIncidents":
       return { ...state, fireIncidents: action.payload };
+    case "getIncidentsByType":
+      return { ...state, typeIncidents: action.payload };
     case "getDisasterTypeNames":
       return { ...state, disasterTypeNames: action.payload };
     case "getDistricts":
@@ -65,6 +67,17 @@ const getFireIncidents = (dispatch) => async () => {
   try {
     const response = await disasterApi.get(`/incident/view/fire`);
     dispatch({ type: "getFireIncidents", payload: response.data });
+  } catch (err) {
+    console.log(err);
+  }
+  dispatch({ type: "loaded" });
+};
+
+const getIncidentsByType = (dispatch) => async (disasterType) => {
+  dispatch({ type: "loading" });
+  try {
+    const response = await disasterApi.get(`/incident/view/${disasterType}`);
+    dispatch({ type: "getIncidentsByType", payload: response.data });
   } catch (err) {
     console.log(err);
   }
@@ -157,12 +170,14 @@ export const { Context, Provider } = createDataContext(
     updateIncident,
     deleteIncident,
     getDisasterTypeNames,
+    getIncidentsByType,
   },
   {
     allIncidents: null,
     floodIncidents: null,
     earthquakeIncidents: null,
     fireIncidents: null,
+    typeIncidents:null,
     districts: null,
     sources: null,
     VMsForDistrict: null,

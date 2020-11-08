@@ -9,6 +9,7 @@ import EditIncident from "../components/forms/EditIncident";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { Context as ApiContext } from "../context/ApiContext";
+import { Container } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -47,7 +48,7 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
   };
 
   return (
-    <>
+    <Container>
       {incidents && (
         <>
           <div style={{ height: 800, width: "90%" }}>
@@ -115,7 +116,7 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
           )}
         </>
       )}
-    </>
+    </Container>
   );
 };
 
