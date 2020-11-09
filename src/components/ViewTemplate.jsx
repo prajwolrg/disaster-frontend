@@ -51,9 +51,51 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
 
   return (
     <Container>
+      <div>
+        <Button
+          variant="contained"
+          color="default"
+          className={classes.button}
+          startIcon={<AddIcon />}
+          onClick={handleAddOpen}
+        >
+          Add
+        </Button>
+        {incidents && incidents.length > 0 && (
+          <>
+            <Button
+              variant="contained"
+              className={classes.button}
+              startIcon={<EditIcon />}
+              onClick={handleEditOpen}
+            >
+              Edit
+            </Button>
+            <Button
+              variant="contained"
+              className={classes.button}
+              startIcon={<DeleteIcon />}
+              onClick={() => {
+                setSelection(selected);
+                setConfirmOpen(true);
+              }}
+            >
+              Delete
+            </Button>
+            <ConfirmDialog
+              title="Delete Incident?"
+              open={confirmOpen}
+              setOpen={setConfirmOpen}
+              onConfirm={handleDelete}
+            >
+              Are you sure you want to delete these incidents?
+            </ConfirmDialog>
+          </>
+        )}
+      </div>
       {incidents && (
         <>
-          <div style={{ height: 800, width: "90%" }}>
+          <div style={{ height: 600, width: "100%" }}>
             <DataGrid
               rows={incidents.map((incident) => ({
                 ...incident,
@@ -66,48 +108,7 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
               checkboxSelection
             />
           </div>
-          <div>
-            <Button
-              variant="contained"
-              color="default"
-              className={classes.button}
-              startIcon={<AddIcon />}
-              onClick={handleAddOpen}
-            >
-              Add
-            </Button>
-            {incidents && incidents.length > 0 && (
-              <>
-                <Button
-                  variant="contained"
-                  className={classes.button}
-                  startIcon={<EditIcon />}
-                  onClick={handleEditOpen}
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="contained"
-                  className={classes.button}
-                  startIcon={<DeleteIcon />}
-                  onClick={() => {
-                    setSelection(selected);
-                    setConfirmOpen(true);
-                  }}
-                >
-                  Delete
-                </Button>
-                <ConfirmDialog
-                  title="Delete Incident?"
-                  open={confirmOpen}
-                  setOpen={setConfirmOpen}
-                  onConfirm={handleDelete}
-                >
-                  Are you sure you want to delete these incidents?
-                </ConfirmDialog>
-              </>
-            )}
-          </div>
+
           <AddIncident
             open={addOpen}
             onClose={handleAddClose}
