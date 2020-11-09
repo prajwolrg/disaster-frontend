@@ -152,6 +152,16 @@ const deleteIncident = (dispatch) => async (id) => {
   }
   dispatch({ type: "loaded" });
 };
+const deleteMultipleIncidents = (dispatch) => async (idArray) => {
+  dispatch({ type: "loading" });
+  try {
+    await idArray.forEach(async(id)=>{await disasterApi.delete(`/incident/delete/${id}`);});
+    getAllIncidents(dispatch)();
+  } catch (err) {
+    console.log(err);
+  }
+  dispatch({ type: "loaded" });
+};
 
 export const { Context, Provider } = createDataContext(
   reducer,
@@ -166,15 +176,12 @@ export const { Context, Provider } = createDataContext(
     addIncident,
     updateIncident,
     deleteIncident,
+    deleteMultipleIncidents,
     getDisasterTypeNames,
     getIncidentsByType,
   },
   {
     allIncidents: null,
-    floodIncidents: null,
-    earthquakeIncidents: null,
-    fireIncidents: null,
-    typeIncidents:null,
     districts: null,
     sources: null,
     VMsForDistrict: null,

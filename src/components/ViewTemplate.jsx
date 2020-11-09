@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { Context as ApiContext } from "../context/ApiContext";
 import { Container } from "@material-ui/core";
+import ConfirmDialog from "./confirmDialog";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -17,21 +18,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let selected = [];
+
 const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
   const classes = useStyles();
-  const [selected, setSelected] = useState();
-  const [active, setActive] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
+  const [selection, setSelection] = useState({});
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
-  const { deleteIncident } = useContext(ApiContext);
+  const { deleteMultipleIncidents } = useContext(ApiContext);
 
-  const handleRowSelected = (props) => {
-    setSelected(props);
-    setActive(props.isSelected);
-  };
   const handleEditOpen = () => {
-    setEditOpen(true);
+    if (selected && selected.length === 1) {
+      setSelection(selected[0]);
+      setEditOpen(true);
+    }
   };
   const handleEditClose = () => {
     setEditOpen(false);
@@ -43,8 +45,8 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
     setAddOpen(false);
   };
   const handleDelete = async () => {
-    if (selected) await deleteIncident(selected.data.incidentID);
-    setSelected(null);
+    if (selection && selection.length)
+      await deleteMultipleIncidents(selection.map((elem) => elem.incidentID));
   };
 
   return (
@@ -58,7 +60,9 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
                 id: incident.incidentID,
               }))}
               columns={columns}
-              onRowSelected={handleRowSelected}
+              onSelectionChange={(data) => {
+                selected = data.rows;
+              }}
               checkboxSelection
             />
           </div>
@@ -78,7 +82,6 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
                   variant="contained"
                   className={classes.button}
                   startIcon={<EditIcon />}
-                  disabled={!active}
                   onClick={handleEditOpen}
                 >
                   Edit
@@ -87,11 +90,21 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
                   variant="contained"
                   className={classes.button}
                   startIcon={<DeleteIcon />}
-                  disabled={!active}
-                  onClick={handleDelete}
+                  onClick={() => {
+                    setSelection(selected);
+                    setConfirmOpen(true);
+                  }}
                 >
                   Delete
                 </Button>
+                <ConfirmDialog
+                  title="Delete Incident?"
+                  open={confirmOpen}
+                  setOpen={setConfirmOpen}
+                  onConfirm={handleDelete}
+                >
+                  Are you sure you want to delete these incidents?
+                </ConfirmDialog>
               </>
             )}
           </div>
@@ -100,19 +113,12 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
             onClose={handleAddClose}
             disasterTypeName={disasterTypeName}
           />
-          {active ? (
-            <>
-              {selected && (
-                <EditIncident
-                  open={editOpen}
-                  onClose={handleEditClose}
-                  setSelected={setSelected}
-                  initialValues={selected}
-                ></EditIncident>
-              )}
-            </>
-          ) : (
-            <></>
+          {editOpen && (
+            <EditIncident
+              open={editOpen}
+              onClose={handleEditClose}
+              initialValues={selection}
+            ></EditIncident>
           )}
         </>
       )}

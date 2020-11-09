@@ -69,7 +69,7 @@ const AddIncident = ({ open, onClose, disasterTypeName }) => {
 
   useEffect(() => {
     (async () => {
-      await getDistricts();
+      if(!districts) await getDistricts();
       await getSources();
       await getDisasterTypeNames();
 

@@ -58,9 +58,10 @@ const IncidentSchema = Yup.object().shape({
 const EditIncident = (props) => {
   const classes = useStyles();
   const { open, onClose, initialValues } = props;
+  console.log(initialValues)
 
   var visibility = ["none", "none", "none"];
-  const disaster = initialValues.data.disasterTypeName;
+  const disaster = initialValues.disasterTypeName;
 
   if (disaster === "Flood") {
     visibility = ["initial", "none", "none"];
@@ -80,15 +81,14 @@ const EditIncident = (props) => {
 
   useEffect(() => {
     (async () => {
-      await getVMsForDistrict(initialValues.data.districtName);
-      await getDistricts();
+      await getVMsForDistrict(initialValues.districtName);
+      if(!districts) await getDistricts();
       await getSources();
     })();
-  }, [initialValues]);
+  }, []);
 
   const handleClose = () => {
     onClose();
-    props.setSelected(null);
   };
 
   return (
@@ -108,13 +108,13 @@ const EditIncident = (props) => {
             <Formik
               validationSchema={IncidentSchema}
               initialValues={{
-                ...initialValues.data,
-                locationID: initialValues.data.vmID,
-                incidentDate: new Date(initialValues.data.incidentDate),
+                ...initialValues,
+                locationID: initialValues.vmID,
+                incidentDate: new Date(initialValues.incidentDate),
               }}
               onSubmit={async (values, action) => {
                 delete values.districtName;
-                await updateIncident(initialValues.data.incidentID, values);
+                await updateIncident(initialValues.incidentID, values);
                 action.resetForm();
                 handleClose();
               }}
