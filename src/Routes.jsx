@@ -1,20 +1,25 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 const Incidents = React.lazy(() => import("./pages/Incidents"));
-// const Fires = React.lazy(() => import("./pages/Fires"));
-// const Earthquakes = React.lazy(() => import("./pages/Earthquakes"));
-// const Floods = React.lazy(() => import("./pages/Floods"));
+const SignIn = React.lazy(() => import("./pages/Login"));
+const CreateUser = React.lazy(() => import("./pages/CreateUser"));
 
-const Routes = () => {
+export const LoggedInRoutes = () => {
   return (
     <Switch>
       <Route exact path="/" component={Incidents} />
-      {/* <Route exact path="/flood" component={Floods} />
-      <Route exact path="/earthquake" component={Earthquakes} />
-      <Route exact path="/fire" component={Fires} /> */}
+      <Route exact path="/create" component={CreateUser} />
       <Redirect to="/" />
     </Switch>
   );
 };
 
-export default Routes;
+export const LoggedOutRoutes=()=>{
+  return (
+    <Switch>
+    <Route exact path="/" component={Incidents} />
+    <Route exact path="/signin" component={SignIn} />
+    <Redirect to="/signin" />
+    </Switch>
+  )
+};

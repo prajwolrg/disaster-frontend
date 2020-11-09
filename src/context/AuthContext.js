@@ -11,6 +11,8 @@ const reducer = (state, action) => {
       return { user: null, errorMessage: "" };
     case "add_error":
       return { ...state, errorMessage: action.payload };
+    case "clear_error":
+      return { ...state, errorMessage: "" };
     case "loading":
       return { ...state, isLoadingInAuth: true };
     case "loaded":
@@ -23,7 +25,10 @@ const reducer = (state, action) => {
 const signin = (dispatch) => async ({ username, password }) => {
   try {
     dispatch({ type: "loading" });
-    const response = await disasterApi.post("/admin/signin", { username, password });
+    const response = await disasterApi.post("/admin/signin", {
+      username,
+      password,
+    });
     const token = response.data.token;
     dispatch({ type: "loaded" });
     dispatch({ type: "signin", payload: token });
@@ -39,9 +44,8 @@ const createAdmin = (dispatch) => async ({ username, password }) => {
   try {
     await disasterApi.post("/admin/create", {
       username,
-      password
+      password,
     });
-
   } catch (error) {
     dispatch({ type: "add_error", payload: "Creating Admin failed." });
   }
@@ -72,8 +76,12 @@ const getUser = (dispatch) => async () => {
   }
 };
 
+const clearError = (dispatch) => () => {
+  dispatch({ type: "clear_error" });
+};
+
 export const { Context, Provider } = createDataContext(
   reducer,
-  { signin, signout, createAdmin, getUser },
+  { signin, signout, createAdmin, getUser, clearError },
   { user: null, token: null, errorMessage: "", isLoadingInAuth: true }
 );
