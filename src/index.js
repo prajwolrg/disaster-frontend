@@ -3,12 +3,15 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider as ApiProvider } from "./context/ApiContext";
+import { Provider as AuthProvider } from "./context/AuthContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApiProvider>
-      <App />
-    </ApiProvider>
+    <AuthProvider>
+      <ApiProvider>
+        <App />
+      </ApiProvider>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
