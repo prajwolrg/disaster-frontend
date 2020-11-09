@@ -77,7 +77,7 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
               startIcon={<DeleteIcon />}
               onClick={() => {
                 setSelection(selected);
-                setConfirmOpen(true);
+                if(selected && selected.length) setConfirmOpen(true);
               }}
             >
               Delete
