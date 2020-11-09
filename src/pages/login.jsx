@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Context as AuthContext } from "../context/AuthContext";
 import LoginForm from "./LoginForm";
 
