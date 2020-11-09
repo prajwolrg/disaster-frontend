@@ -12,112 +12,113 @@ import { Context as ApiContext } from "../context/ApiContext";
 import { Container } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(1),
-  },
+    button: {
+        margin: theme.spacing(1),
+    },
 }));
 
 const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
-  const classes = useStyles();
-  const [selected, setSelected] = useState();
-  const [active, setActive] = useState(false);
-  const [addOpen, setAddOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
+    const classes = useStyles();
+    const [selected, setSelected] = useState();
+    const [active, setActive] = useState(false);
+    const [addOpen, setAddOpen] = useState(false);
+    const [editOpen, setEditOpen] = useState(false);
 
-  const { deleteIncident } = useContext(ApiContext);
+    const { deleteIncident } = useContext(ApiContext);
 
-  const handleRowSelected = (props) => {
-    setSelected(props);
-    setActive(props.isSelected);
-  };
-  const handleEditOpen = () => {
-    setEditOpen(true);
-  };
-  const handleEditClose = () => {
-    setEditOpen(false);
-  };
-  const handleAddOpen = () => {
-    setAddOpen(true);
-  };
-  const handleAddClose = () => {
-    setAddOpen(false);
-  };
-  const handleDelete = async () => {
-    if (selected) await deleteIncident(selected.data.incidentID);
-    setSelected(null);
-  };
+    const handleRowSelected = (props) => {
+        setSelected(props);
+        setActive(props.isSelected);
+    };
+    const handleEditOpen = () => {
+        setEditOpen(true);
+    };
+    const handleEditClose = () => {
+        setEditOpen(false);
+    };
+    const handleAddOpen = () => {
+        setAddOpen(true);
+    };
+    const handleAddClose = () => {
+        setAddOpen(false);
+    };
+    const handleDelete = async () => {
+        if (selected) await deleteIncident(selected.data.incidentID);
+        setSelected(null);
+    };
 
-  return (
-    <Container>
-      {incidents && (
-        <>
-          <div style={{ height: 800, width: "90%" }}>
-            <DataGrid
-              rows={incidents.map((incident) => ({
-                ...incident,
-                id: incident.incidentID,
-              }))}
-              columns={columns}
-              onRowSelected={handleRowSelected}
-              checkboxSelection
-            />
-          </div>
-          <div>
-            <Button
-              variant="contained"
-              color="default"
-              className={classes.button}
-              startIcon={<AddIcon />}
-              onClick={handleAddOpen}
-            >
-              Add
-            </Button>
-            {incidents && incidents.length > 0 && (
-              <>
+    return (
+        <Container>
+            <div>
                 <Button
-                  variant="contained"
-                  className={classes.button}
-                  startIcon={<EditIcon />}
-                  disabled={!active}
-                  onClick={handleEditOpen}
+                    variant="contained"
+                    color="default"
+                    className={classes.button}
+                    startIcon={<AddIcon />}
+                    onClick={handleAddOpen}
                 >
-                  Edit
+                    Add
                 </Button>
-                <Button
-                  variant="contained"
-                  className={classes.button}
-                  startIcon={<DeleteIcon />}
-                  disabled={!active}
-                  onClick={handleDelete}
-                >
-                  Delete
-                </Button>
-              </>
+                {incidents && incidents.length > 0 && (
+                    <>
+                        <Button
+                            variant="contained"
+                            className={classes.button}
+                            startIcon={<EditIcon />}
+                            disabled={!active}
+                            onClick={handleEditOpen}
+                        >
+                            Edit
+                        </Button>
+                        <Button
+                            variant="contained"
+                            className={classes.button}
+                            startIcon={<DeleteIcon />}
+                            disabled={!active}
+                            onClick={handleDelete}
+                        >
+                            Delete
+                        </Button>
+                    </>
+                )}
+            </div>
+            {incidents && (
+                <>
+                    <div style={{ height: 600, width: "100%" }}>
+                        <DataGrid
+                            rows={incidents.map((incident) => ({
+                                ...incident,
+                                id: incident.incidentID,
+                            }))}
+                            columns={columns}
+                            onRowSelected={handleRowSelected}
+                            checkboxSelection
+                        />
+                    </div>
+
+                    <AddIncident
+                        open={addOpen}
+                        onClose={handleAddClose}
+                        disasterTypeName={disasterTypeName}
+                    />
+                    {active ? (
+                        <>
+                            {selected && (
+                                <EditIncident
+                                    open={editOpen}
+                                    onClose={handleEditClose}
+                                    setSelected={setSelected}
+                                    initialValues={selected}
+                                ></EditIncident>
+                            )}
+                        </>
+                    ) : (
+                        <></>
+                    )}
+                </>
             )}
-          </div>
-          <AddIncident
-            open={addOpen}
-            onClose={handleAddClose}
-            disasterTypeName={disasterTypeName}
-          />
-          {active ? (
-            <>
-              {selected && (
-                <EditIncident
-                  open={editOpen}
-                  onClose={handleEditClose}
-                  setSelected={setSelected}
-                  initialValues={selected}
-                ></EditIncident>
-              )}
-            </>
-          ) : (
-            <></>
-          )}
-        </>
-      )}
-    </Container>
-  );
+        </Container>
+    );
 };
 
 export default ViewTemplate;
