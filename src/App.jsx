@@ -9,9 +9,10 @@ const App = () => {
     state: { user, isLoadingInAuth },
     getUser,
   } = useContext(AuthContext);
-  useEffect(async () => {
+  useEffect(()=>
+  (async () => {
     await getUser();
-  }, []);
+  })(), []);
   return (
     <>
       <Router>

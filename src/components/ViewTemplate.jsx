@@ -106,6 +106,9 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
               rows={incidents.map((incident) => ({
                 ...incident,
                 id: incident.incidentID,
+                incidentDate: new Date(
+                  String(incident.incidentDate)
+                ).toLocaleDateString(),
               }))}
               columns={columns}
               onSelectionChange={(data) => {

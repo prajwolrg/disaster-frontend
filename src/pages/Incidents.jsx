@@ -50,16 +50,24 @@ const Incidents = () => {
     getDisasterTypeNames,
   } = useContext(ApiContext);
 
-  useEffect(async () => {
-    await getAllIncidents();
-    clearError();
-  }, []);
+  useEffect(
+    () =>
+      (async () => {
+        await getAllIncidents();
+        clearError();
+      })(),
+    []
+  );
 
   useEffect(() => {}, [allIncidents]);
 
-  useEffect(async () => {
-    await getDisasterTypeNames();
-  }, []);
+  useEffect(
+    () =>
+      (async () => {
+        await getDisasterTypeNames();
+      })(),
+    []
+  );
 
   return (
     <Container>
