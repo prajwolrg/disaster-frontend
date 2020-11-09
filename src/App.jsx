@@ -1,4 +1,3 @@
-import { CircularProgress } from "@material-ui/core";
 import React, { Suspense, useContext, useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Menus from "./components/Menus";
