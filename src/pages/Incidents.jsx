@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context as ApiContext } from "../context/ApiContext";
-import { Container, MenuItem, Select } from "@material-ui/core";
+import { Container, MenuItem, Select, Typography } from "@material-ui/core";
 import {
     INCIDENT_COLUMNS,
     EARTHQUAKE_COLUMNS,
@@ -51,11 +51,15 @@ const Incidents = () => {
                 style={{ margin: 20, marginLeft: 30 }}
                 variant="outlined"
             >
-                <MenuItem value="All">All Disasters</MenuItem>
+                <MenuItem value="All">
+                    <Typography variant="h6"> All Disasters</Typography>
+                </MenuItem>
                 {disasterTypeNames &&
                     disasterTypeNames.map((item) => (
                         <MenuItem value={item.disasterTypeName}>
-                            {item.disasterTypeName}
+                            <Typography variant="body1">
+                                {item.disasterTypeName}
+                            </Typography>
                         </MenuItem>
                     ))}
             </Select>
