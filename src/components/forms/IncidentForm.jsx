@@ -92,6 +92,7 @@ const IncidentForm = ({
 
   const handleClose = () => {
     onClose();
+    getVMsForDistrict(null);
   };
 
   return (
@@ -316,7 +317,7 @@ const IncidentForm = ({
                       {sources &&
                         sources.map((source) => (
                           <MenuItem
-                            key={source.disasterTypeName}
+                            key={source.sourceID}
                             value={source.sourceID}
                           >
                             {source.name}

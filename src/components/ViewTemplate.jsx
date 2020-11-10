@@ -54,7 +54,7 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
   };
 
   return (
-    <Container>
+    <Container style={{padding:0}}>
       {user && (
         <div>
           <Button

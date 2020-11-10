@@ -111,6 +111,7 @@ const getDisasterTypeNames = (dispatch) => async () => {
 };
 
 const getVMsForDistrict = (dispatch) => async (name) => {
+  if(!name) return dispatch({ type: "getVMsForDistrict", payload: null });
   dispatch({ type: "loading" });
   try {
     const response = await disasterApi.get(`/vm/district/${name}`);
@@ -126,6 +127,17 @@ const addIncident = (dispatch) => async (values) => {
   try {
     await disasterApi.post("/incident/insert", values);
     getAllIncidents(dispatch)();
+  } catch (err) {
+    console.log(err);
+  }
+  dispatch({ type: "loaded" });
+};
+
+const addDataSource = (dispatch) => async (values) => {
+  dispatch({ type: "loading" });
+  try {
+    await disasterApi.post("/datasource/insert", values);
+    getSources(dispatch)();
   } catch (err) {
     console.log(err);
   }
@@ -176,6 +188,7 @@ export const { Context, Provider } = createDataContext(
     addIncident,
     updateIncident,
     deleteIncident,
+    addDataSource,
     deleteMultipleIncidents,
     getDisasterTypeNames,
     getIncidentsByType,

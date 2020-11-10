@@ -11,6 +11,8 @@ import {
 import ViewTemplate from "../components/ViewTemplate";
 import { Context as AuthContext } from "../context/AuthContext";
 import Button from "@material-ui/core/Button";
+import AddSource from "../components/forms/AddSource";
+import Search from "../components/Search";
 
 const getColumns = (type) => {
   switch (type) {
@@ -27,6 +29,32 @@ const getColumns = (type) => {
 
 const Incidents = () => {
   const [type, setType] = useState("All");
+  const [sourceOpen, setSourceOpen] = useState(false);
+  const [searchFilter, setSearchFilter] = useState({
+    district: null,
+    vm: null,
+    source: null,
+    dateFrom: null,
+    dateTo: null,
+  });
+  const filterIncidents = (incidents) => {
+    if (incidents && searchFilter)
+      return incidents.filter((elem) => {
+        let result = true;
+        if (result && searchFilter.districtName)
+          result = elem.districtName === searchFilter.districtName;
+        if (result && searchFilter.vmID) result = elem.vmID === searchFilter.vmID;
+        if (result && searchFilter.sourceID)
+          result = elem.sourceID === searchFilter.sourceID;
+        if (result && searchFilter.dateFrom)
+          result =
+            elem.incidentDate.localeCompare(searchFilter.dateFrom) !== -1;
+        if (result && searchFilter.dateFrom)
+          result = elem.incidentDate.localeCompare(searchFilter.dateTo) !== 1;
+        return result;
+      });
+    else return incidents;
+  };
   const {
     state: { user },
     signout,
@@ -91,24 +119,40 @@ const Incidents = () => {
             ))}
         </Select>
         <div style={{ marginLeft: "auto" }}>
-          {user && (
-            <Button color="primary" onClick={handleCreate}>
+          {user && [
+            <Button
+              color="primary"
+              onClick={() => {
+                setSourceOpen(true);
+              }}
+              key="1"
+            >
+              Add Source
+            </Button>,
+            <Button color="primary" onClick={handleCreate} key="2">
               Create User
-            </Button>
-          )}
+            </Button>,
+          ]}
           <Button color="primary" onClick={handleClick}>
             {user ? "Sign Out" : "Sign In"}
           </Button>
         </div>
       </div>
+      <Search submitFunction={setSearchFilter} />
       <ViewTemplate
-        incidents={
+        incidents={filterIncidents(
           type === "All"
             ? allIncidents
             : allIncidents.filter((elem) => elem.disasterTypeName === type)
-        }
+        )}
         columns={getColumns(type)}
         disasterTypeName={type === "All" ? null : type}
+      />
+      <AddSource
+        open={sourceOpen}
+        onClose={() => {
+          setSourceOpen(false);
+        }}
       />
     </Container>
   );
