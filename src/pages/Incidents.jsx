@@ -89,7 +89,7 @@ const Incidents = () => {
         ? allIncidents
         : allIncidents.filter((elem) => elem.disasterTypeName === type)
     ))
-  }, [allIncidents,searchFilter]);
+  }, [allIncidents,searchFilter,type]);
 
   useEffect(
     () =>
