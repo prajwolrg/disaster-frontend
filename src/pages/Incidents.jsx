@@ -13,6 +13,7 @@ import { Context as AuthContext } from "../context/AuthContext";
 import Button from "@material-ui/core/Button";
 import AddSource from "../components/forms/AddSource";
 import Search from "../components/Search";
+import Export from "../components/Export"
 
 const getColumns = (type) => {
   switch (type) {
@@ -29,14 +30,9 @@ const getColumns = (type) => {
 
 const Incidents = () => {
   const [type, setType] = useState("All");
+  const [incidents, setIncidents] = useState();
   const [sourceOpen, setSourceOpen] = useState(false);
-  const [searchFilter, setSearchFilter] = useState({
-    district: null,
-    vm: null,
-    source: null,
-    dateFrom: null,
-    dateTo: null,
-  });
+  const [searchFilter, setSearchFilter] = useState();
   const filterIncidents = (incidents) => {
     if (incidents && searchFilter)
       return incidents.filter((elem) => {
@@ -87,7 +83,13 @@ const Incidents = () => {
     []
   );
 
-  useEffect(() => {}, [allIncidents]);
+  useEffect(() => {
+    setIncidents(filterIncidents(
+      type === "All"
+        ? allIncidents
+        : allIncidents.filter((elem) => elem.disasterTypeName === type)
+    ))
+  }, [allIncidents,searchFilter]);
 
   useEffect(
     () =>
@@ -140,14 +142,11 @@ const Incidents = () => {
       </div>
       <Search submitFunction={setSearchFilter} />
       <ViewTemplate
-        incidents={filterIncidents(
-          type === "All"
-            ? allIncidents
-            : allIncidents.filter((elem) => elem.disasterTypeName === type)
-        )}
+        incidents={incidents}
         columns={getColumns(type)}
         disasterTypeName={type === "All" ? null : type}
       />
+      <Export incidents={incidents} columns={getColumns(type)}/>
       <AddSource
         open={sourceOpen}
         onClose={() => {

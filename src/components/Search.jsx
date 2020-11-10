@@ -50,7 +50,7 @@ export default ({ submitFunction }) => {
           !resetFields && (
             <Form>
               <Field
-                style={{ margin: 10, marginTop: 29, backgroundColor: "white" }}
+                style={{ margin: 10, marginTop: 29, backgroundColor: "white",width:170  }}
                 name="dateFrom"
                 component={TextField}
                 type="Date"
@@ -61,7 +61,7 @@ export default ({ submitFunction }) => {
                 variant="outlined"
               />
               <Field
-                style={{ margin: 10, marginTop: 29, backgroundColor: "white" }}
+                style={{ margin: 10, marginTop: 29, backgroundColor: "white",width:170 }}
                 name="dateTo"
                 component={TextField}
                 type="Date"
@@ -79,7 +79,7 @@ export default ({ submitFunction }) => {
                   inputProps={{
                     id: "sourceID",
                   }}
-                  style={{ backgroundColor: "white" }}
+                  style={{ backgroundColor: "white",minWidth:130 }}
                 >
                   <MenuItem value={null}>Any</MenuItem>
                   {sources &&
@@ -103,7 +103,7 @@ export default ({ submitFunction }) => {
                     setFieldValue("vmID", null);
                     await getVMsForDistrict(p.target.value);
                   }}
-                  style={{ backgroundColor: "white" }}
+                  style={{ backgroundColor: "white",minWidth:160 }}
                 >
                   <MenuItem value={null}>Any</MenuItem>
                   {districts &&
@@ -125,7 +125,7 @@ export default ({ submitFunction }) => {
                   inputProps={{
                     id: "vmID",
                   }}
-                  style={{ backgroundColor: "white" }}
+                  style={{ backgroundColor: "white",minWidth:192 }}
                 >
                   <MenuItem value={null}>Any</MenuItem>
                   {VMsForDistrict &&

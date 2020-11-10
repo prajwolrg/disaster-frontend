@@ -101,7 +101,7 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
       )}
       {incidents && (
         <>
-          <div style={{ height: 600, width: "100%" }}>
+          <div style={{ height: 650, width: "100%" }}>
             <DataGrid
               rows={incidents.map((incident) => ({
                 ...incident,

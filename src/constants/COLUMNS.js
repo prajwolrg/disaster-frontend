@@ -71,7 +71,7 @@ export const INCIDENT_COLUMNS = [
         width: 150,
         type: "number",
     },
-    {
+    /* {
         field: "locationID",
         headerName: "Location ID",
         width: 150,
@@ -82,7 +82,7 @@ export const INCIDENT_COLUMNS = [
         headerName: "Source ID",
         width: 150,
         type: "number",
-    },
+    }, */
     {
         field: "website",
         headerName: "Website",
