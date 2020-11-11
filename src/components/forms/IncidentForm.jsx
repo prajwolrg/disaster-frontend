@@ -53,6 +53,7 @@ const IncidentSchema = Yup.object().shape({
   damagedHouses: Yup.number().min(0, "Must be greater than 0"),
   locationID: Yup.number().min(0, "Must be greater than 0"),
   sourceID: Yup.number().required("Required"),
+  comment: Yup.string(),
 });
 
 const IncidentForm = ({
@@ -276,15 +277,6 @@ const IncidentForm = ({
                   />
                   <Field
                     style={{ margin: 10 }}
-                    name="propertyLoss"
-                    type="number"
-                    component={TextField}
-                    label="Property Loss"
-                    variant="outlined"
-                    fullWidth={true}
-                  />
-                  <Field
-                    style={{ margin: 10 }}
                     name="affectedFamily"
                     type="number"
                     component={TextField}
@@ -378,6 +370,16 @@ const IncidentForm = ({
                       </Field>
                     </FormControl>
                   )}
+                  <Field
+                    style={{
+                      margin: 10,
+                    }}
+                    name="comment"
+                    component={TextField}
+                    label="Comment"
+                    variant="outlined"
+                    fullWidth={true}
+                  />
                   <Button
                     style={{ margin: 10 }}
                     type="submit"

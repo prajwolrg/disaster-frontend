@@ -60,12 +60,6 @@ export const INCIDENT_COLUMNS = [
         type: "number",
     },
     {
-        field: "propertyLoss",
-        headerName: "Property Loss",
-        width: 150,
-        type: "number",
-    },
-    {
         field: "damagedHouses",
         headerName: "Damaged Houses",
         width: 150,
@@ -88,6 +82,12 @@ export const INCIDENT_COLUMNS = [
         headerName: "Website",
         width: 150,
         type: "number",
+    },
+    {
+        field: "comment",
+        headerName: "Comment",
+        width: 300,
+        type: "string",
     },
 ];
 
