@@ -11,6 +11,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Context as ApiContext } from "../context/ApiContext";
 import { Context as AuthContext } from "../context/AuthContext";
 
+import Incident from "./DisasterCard";
+
 import { Container } from "@material-ui/core";
 import ConfirmDialog from "./confirmDialog";
 
@@ -24,6 +26,8 @@ let selected = [];
 
 const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
     const classes = useStyles();
+    const [openIncident, setOpenIncident] = useState({});
+    const [incidentOpen, setIncidentOpen] = useState(false);
     const [addOpen, setAddOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
     const [selection, setSelection] = useState({});
@@ -39,6 +43,9 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
             setEditOpen(true);
         }
     };
+    const handleIncidentClose = () => {
+        setIncidentOpen(false);
+    };
     const handleEditClose = () => {
         setEditOpen(false);
     };
@@ -53,6 +60,11 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
             await deleteMultipleIncidents(
                 selection.map((elem) => elem.incidentID)
             );
+    };
+
+    const handleIncidentOpen = (data) => {
+        setOpenIncident(data.data);
+        setIncidentOpen(true);
     };
 
     return (
@@ -118,13 +130,22 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
                                 if (user) selected = data.rows;
                             }}
                             checkboxSelection={user ? true : false}
+                            onRowClick={(data) => handleIncidentOpen(data)}
                         />
                     </div>
 
+                    <Incident
+                        open={incidentOpen}
+                        onClose={handleIncidentClose}
+                        incident={openIncident}
+                        admin={user}
+                        addOpen = {setAddOpen}
+                    />
                     <AddIncident
                         open={addOpen}
                         onClose={handleAddClose}
                         disasterTypeName={disasterTypeName}
+                        admin={false}
                     />
                     {editOpen && (
                         <EditIncident
