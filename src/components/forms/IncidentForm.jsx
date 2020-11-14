@@ -5,6 +5,7 @@ import {
   Typography,
   Container,
   Avatar,
+  FormLabel,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -77,6 +78,7 @@ const IncidentForm = ({
   const [currentDisasterTypeName, setCurrentDisasterTypeName] = useState(
     disasterTypeName
   );
+  const [images, setImages] = useState(null);
 
   useEffect(
     () =>
@@ -115,6 +117,7 @@ const IncidentForm = ({
               validationSchema={IncidentSchema}
               onSubmit={async (values, action) => {
                 delete values.districtName;
+                values.images = images;
                 await submitFunction(values);
                 action.resetForm();
                 handleClose();
@@ -127,7 +130,7 @@ const IncidentForm = ({
                     name="incidentDate"
                     component={TextField}
                     type="Date"
-                    label="Incident Date"
+                    label="Incident Date*"
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -139,7 +142,7 @@ const IncidentForm = ({
                     name="totalDeath"
                     type="number"
                     component={TextField}
-                    label="Total Death"
+                    label="Total Death*"
                     variant="outlined"
                     fullWidth={true}
                   />
@@ -148,7 +151,7 @@ const IncidentForm = ({
                     name="missingPeople"
                     type="number"
                     component={TextField}
-                    label="Missing People"
+                    label="Missing People*"
                     variant="outlined"
                     fullWidth={true}
                   />
@@ -157,7 +160,7 @@ const IncidentForm = ({
                     variant="outlined"
                     style={{ margin: 10 }}
                   >
-                    Disaster Type Name
+                    Disaster Type Name*
                     <Field
                       component={Select}
                       name="disasterTypeName"
@@ -192,7 +195,7 @@ const IncidentForm = ({
                         name="richterMagnitude"
                         type="number"
                         component={TextField}
-                        label="Richter Magnitude"
+                        label="Richter Magnitude*"
                         variant="outlined"
                         fullWidth={true}
                       />
@@ -202,7 +205,7 @@ const IncidentForm = ({
                         }}
                         name="epicenter"
                         component={TextField}
-                        label="Epicenter"
+                        label="Epicenter*"
                         variant="outlined"
                         fullWidth={true}
                       />
@@ -216,7 +219,7 @@ const IncidentForm = ({
                       }}
                       name="cause"
                       component={TextField}
-                      label="Cause of Fire"
+                      label="Cause of Fire*"
                       variant="outlined"
                       fullWidth={true}
                     />
@@ -229,7 +232,7 @@ const IncidentForm = ({
                         }}
                         name="origin"
                         component={TextField}
-                        label="Origin"
+                        label="Origin*"
                         variant="outlined"
                         fullWidth={true}
                       />
@@ -240,7 +243,7 @@ const IncidentForm = ({
                         name="height"
                         type="number"
                         component={TextField}
-                        label="Height"
+                        label="Height*"
                         variant="outlined"
                         fullWidth={true}
                       />
@@ -251,7 +254,7 @@ const IncidentForm = ({
                         name="cattleLoss"
                         type="number"
                         component={TextField}
-                        label="Cattle Loss"
+                        label="Cattle Loss*"
                         variant="outlined"
                         fullWidth={true}
                       />
@@ -262,7 +265,7 @@ const IncidentForm = ({
                     name="estimatedLoss"
                     type="number"
                     component={TextField}
-                    label="Estimated Loss"
+                    label="Estimated Loss*"
                     variant="outlined"
                     fullWidth={true}
                   />
@@ -271,7 +274,7 @@ const IncidentForm = ({
                     name="injured"
                     type="number"
                     component={TextField}
-                    label="Injured"
+                    label="Injured*"
                     variant="outlined"
                     fullWidth={true}
                   />
@@ -280,7 +283,7 @@ const IncidentForm = ({
                     name="affectedFamily"
                     type="number"
                     component={TextField}
-                    label="Affected Family"
+                    label="Affected Family*"
                     variant="outlined"
                     fullWidth={true}
                   />
@@ -289,7 +292,7 @@ const IncidentForm = ({
                     name="damagedHouses"
                     type="number"
                     component={TextField}
-                    label="Damaged Houses"
+                    label="Damaged Houses*"
                     variant="outlined"
                     fullWidth={true}
                   />
@@ -298,7 +301,7 @@ const IncidentForm = ({
                     variant="outlined"
                     style={{ margin: 10 }}
                   >
-                    Source
+                    Source*
                     <Field
                       component={Select}
                       name="sourceID"
@@ -322,7 +325,7 @@ const IncidentForm = ({
                     variant="outlined"
                     style={{ margin: 10 }}
                   >
-                    District
+                    District*
                     <Field
                       component={Select}
                       name="districtName"
@@ -353,7 +356,7 @@ const IncidentForm = ({
                       variant="outlined"
                       style={{ margin: 10 }}
                     >
-                      VDC or Municipality
+                      VDC or Municipality*
                       <Field
                         component={Select}
                         name="locationID"
@@ -376,10 +379,26 @@ const IncidentForm = ({
                     }}
                     name="comment"
                     component={TextField}
-                    label="Comment"
+                    label="Comment*"
                     variant="outlined"
                     fullWidth={true}
                   />
+                  <FormControl
+                    fullWidth={true}
+                    variant="outlined"
+                    style={{ margin: 10 }}
+                  >
+                    <FormLabel>Upload Images (if any)</FormLabel>
+                    <input
+                      style={{ margin: "10px 0" }}
+                      type="file"
+                      accept=".jpg,.jpeg,.png"
+                      onChange={(event) => {
+                        setImages(event.currentTarget.files);
+                      }}
+                      multiple
+                    />
+                  </FormControl>
                   <Button
                     style={{ margin: 10 }}
                     type="submit"
@@ -388,7 +407,7 @@ const IncidentForm = ({
                     color="primary"
                     className={classes.submit}
                   >
-                    continue
+                    confirm {type}
                   </Button>
                 </Form>
               )}

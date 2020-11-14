@@ -126,9 +126,21 @@ const getVMsForDistrict = (dispatch) => async (name) => {
 
 const addIncident = (dispatch) => async (values) => {
   dispatch({ type: "loading" });
+  const formData = new FormData();
+  for (const key in values) {
+    if (key === "images") {
+      const { images } = values;
+      if (images)
+        for (let i = 0; i < images.length; i++) {
+          formData.append("images", images[i]);
+        }
+    } else formData.append(key, values[key]);
+  }
   try {
-    await disasterApi.post("/incident/insert", values);
-    getAllIncidents(dispatch)();
+    await disasterApi.post("/incident/insert", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    await getAllIncidents(dispatch)();
   } catch (err) {
     console.log(err);
   }
@@ -139,7 +151,7 @@ const addDataSource = (dispatch) => async (values) => {
   dispatch({ type: "loading" });
   try {
     await disasterApi.post("/datasource/insert", values);
-    getSources(dispatch)();
+    await getSources(dispatch)();
   } catch (err) {
     console.log(err);
   }
@@ -160,9 +172,21 @@ const getImagesForIncident = (dispatch) => async (id) => {
 
 const updateIncident = (dispatch) => async (id, values) => {
   dispatch({ type: "loading" });
+  const formData = new FormData();
+  for (const key in values) {
+    if (key === "images") {
+      const { images } = values;
+      if (images)
+        for (let i = 0; i < images.length; i++) {
+          formData.append("images", images[i]);
+        }
+    } else formData.append(key, values[key]);
+  }
   try {
-    await disasterApi.patch(`/incident/update/${id}`, values);
-    getAllIncidents(dispatch)();
+    await disasterApi.patch(`/incident/update/${id}`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    await getAllIncidents(dispatch)();
   } catch (err) {
     console.log(err);
   }
@@ -172,7 +196,7 @@ const deleteIncident = (dispatch) => async (id) => {
   dispatch({ type: "loading" });
   try {
     await disasterApi.delete(`/incident/delete/${id}`);
-    getAllIncidents(dispatch)();
+    await getAllIncidents(dispatch)();
   } catch (err) {
     console.log(err);
   }
@@ -184,7 +208,7 @@ const deleteMultipleIncidents = (dispatch) => async (idArray) => {
     await idArray.forEach(async (id) => {
       await disasterApi.delete(`/incident/delete/${id}`);
     });
-    getAllIncidents(dispatch)();
+    await getAllIncidents(dispatch)();
   } catch (err) {
     console.log(err);
   }
