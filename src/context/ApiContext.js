@@ -7,6 +7,8 @@ const reducer = (state, action) => {
       return { ...state, allIncidents: action.payload };
     case "getIncidentsByType":
       return { ...state, typeIncidents: action.payload };
+    case "getImagesForIncident":
+      return { ...state, imagesForIncident: action.payload };
     case "getDisasterTypeNames":
       return { ...state, disasterTypeNames: action.payload };
     case "getDistricts":
@@ -111,7 +113,7 @@ const getDisasterTypeNames = (dispatch) => async () => {
 };
 
 const getVMsForDistrict = (dispatch) => async (name) => {
-  if(!name) return dispatch({ type: "getVMsForDistrict", payload: null });
+  if (!name) return dispatch({ type: "getVMsForDistrict", payload: null });
   dispatch({ type: "loading" });
   try {
     const response = await disasterApi.get(`/vm/district/${name}`);
@@ -144,6 +146,18 @@ const addDataSource = (dispatch) => async (values) => {
   dispatch({ type: "loaded" });
 };
 
+const getImagesForIncident = (dispatch) => async (id) => {
+  dispatch({ type: "loading" });
+  try {
+    const response = await disasterApi.get(`/incident/image/${id}`);
+    dispatch({ type: "getImagesForIncident", payload: response.data });
+    console.log(id, response.data);
+  } catch (err) {
+    console.log(err);
+  }
+  dispatch({ type: "loaded" });
+};
+
 const updateIncident = (dispatch) => async (id, values) => {
   dispatch({ type: "loading" });
   try {
@@ -167,7 +181,9 @@ const deleteIncident = (dispatch) => async (id) => {
 const deleteMultipleIncidents = (dispatch) => async (idArray) => {
   dispatch({ type: "loading" });
   try {
-    await idArray.forEach(async(id)=>{await disasterApi.delete(`/incident/delete/${id}`);});
+    await idArray.forEach(async (id) => {
+      await disasterApi.delete(`/incident/delete/${id}`);
+    });
     getAllIncidents(dispatch)();
   } catch (err) {
     console.log(err);
@@ -192,6 +208,7 @@ export const { Context, Provider } = createDataContext(
     deleteMultipleIncidents,
     getDisasterTypeNames,
     getIncidentsByType,
+    getImagesForIncident,
   },
   {
     allIncidents: null,
@@ -199,6 +216,7 @@ export const { Context, Provider } = createDataContext(
     sources: null,
     VMsForDistrict: null,
     disasterTypeNames: null,
+    imagesForIncident: null,
     isLoading: false,
   }
 );

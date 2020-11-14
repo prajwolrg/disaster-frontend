@@ -1,6 +1,7 @@
 import { createDataContext } from "./createDataContext";
 import disasterApi from "../api/disasterApi";
 
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "signin":
