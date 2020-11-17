@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import {
@@ -14,6 +14,8 @@ import { red } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import ConfirmDialog from "./confirmDialog";
+import { Context as ApiContext } from "../context/ApiContext";
 
 import { Dialog } from "@material-ui/core";
 
@@ -49,9 +51,18 @@ export default function DisasterCard({
   incident,
   admin,
   images,
+  editOpen,
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
+  const { deleteIncident } = useContext(ApiContext);
+
+  const handleDelete = async () => {
+    handleClose();
+    await deleteIncident(incident.id);
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -72,13 +83,16 @@ export default function DisasterCard({
                   <IconButton
                     aria-label="edit"
                     onClick={() => {
-                      console.log("hello");
+                      editOpen(true);
                       handleClose();
                     }}
                   >
                     <EditIcon />
                   </IconButton>
-                  <IconButton aria-label="delete">
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => setConfirmOpen(true)}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </>
@@ -116,6 +130,14 @@ export default function DisasterCard({
           </CardContent>
         </Collapse>
       </Card>
+      <ConfirmDialog
+        title="Delete Incident?"
+        open={confirmOpen}
+        setOpen={setConfirmOpen}
+        onConfirm={handleDelete}
+      >
+        Are you sure you want to delete this incidents?
+      </ConfirmDialog>
     </Dialog>
   );
 }

@@ -14,7 +14,6 @@ function formatDate(date) {
   return [year, month, day].join("-");
 }
 const EditIncident = ({ open, onClose, initialValues, imagesForIncident }) => {
-  console.log(imagesForIncident);
   const { updateIncident } = useContext(ApiContext);
 
   const { incidentID, disasterTypeName, vmID, incidentDate } = initialValues;

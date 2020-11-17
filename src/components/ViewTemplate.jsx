@@ -24,7 +24,6 @@ let selected = [];
 
 const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
   const classes = useStyles();
-  const [openIncident, setOpenIncident] = useState({});
   const [incidentOpen, setIncidentOpen] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
@@ -46,6 +45,7 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
       await getImagesForIncident(selected[0].incidentID);
       setEditOpen(true);
     }
+    else setSelection({})
   };
   const handleIncidentClose = () => {
     setIncidentOpen(false);
@@ -65,7 +65,7 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
   };
 
   const handleIncidentOpen = async (data) => {
-    setOpenIncident(data.data);
+    setSelection(data.data);
     await getImagesForIncident(data.data.incidentID);
     setIncidentOpen(true);
   };
@@ -140,9 +140,9 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
             <Incident
               open={incidentOpen}
               onClose={handleIncidentClose}
-              incident={openIncident}
+              incident={selection}
               admin={user}
-              addOpen={setAddOpen}
+              editOpen={setEditOpen}
               images={imagesForIncident}
             />
           )}
