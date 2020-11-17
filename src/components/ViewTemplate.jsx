@@ -40,9 +40,10 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
     state: { user },
   } = useContext(AuthContext);
 
-  const handleEditOpen = () => {
+  const handleEditOpen = async () => {
     if (selected && selected.length === 1) {
       setSelection(selected[0]);
+      await getImagesForIncident(selected[0].incidentID);
       setEditOpen(true);
     }
   };
@@ -156,6 +157,7 @@ const ViewTemplate = ({ incidents, columns, disasterTypeName }) => {
               open={editOpen}
               onClose={handleEditClose}
               initialValues={selection}
+              imagesForIncident={imagesForIncident}
             ></EditIncident>
           )}
         </>

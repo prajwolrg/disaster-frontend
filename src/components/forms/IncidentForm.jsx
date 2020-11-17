@@ -19,6 +19,10 @@ import { Field, Form, Formik } from "formik";
 import { TextField, Select } from "formik-material-ui";
 import * as Yup from "yup";
 import { Context as ApiContext } from "../../context/ApiContext";
+import ImagePicker from "react-image-picker";
+import apiURL from "../../constants/apiURL";
+
+import "react-image-picker/dist/index.css";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -64,6 +68,7 @@ const IncidentForm = ({
   submitFunction,
   initialValues,
   type,
+  imagesForIncident,
 }) => {
   const classes = useStyles();
 
@@ -79,6 +84,7 @@ const IncidentForm = ({
     disasterTypeName
   );
   const [images, setImages] = useState(null);
+  const [imagesToDelete, SetImagesToDelete] = useState([]);
 
   useEffect(
     () =>
@@ -118,6 +124,7 @@ const IncidentForm = ({
               onSubmit={async (values, action) => {
                 delete values.districtName;
                 values.images = images;
+                values.imagesToDelete = imagesToDelete;
                 await submitFunction(values);
                 action.resetForm();
                 handleClose();
@@ -383,14 +390,36 @@ const IncidentForm = ({
                     variant="outlined"
                     fullWidth={true}
                   />
+
+                  {imagesForIncident && imagesForIncident.length > 0 && (
+                    <FormControl
+                      fullWidth={true}
+                      variant="outlined"
+                      style={{ margin: 10 }}
+                    >
+                      <FormLabel style={{ margin: "10px 0" }}>
+                        Select Images To Delete
+                      </FormLabel>
+                      <ImagePicker
+                        images={imagesForIncident.map((image) => ({
+                          src: `${apiURL}/${image.path}`,
+                          value: image.path,
+                        }))}
+                        onPick={(images) => SetImagesToDelete(images)}
+                        multiple
+                      />
+                    </FormControl>
+                  )}
+
                   <FormControl
                     fullWidth={true}
                     variant="outlined"
                     style={{ margin: 10 }}
                   >
-                    <FormLabel>Upload Images (if any)</FormLabel>
+                    <FormLabel style={{ margin: "10px 0" }}>
+                      Upload Images (if any)
+                    </FormLabel>
                     <input
-                      style={{ margin: "10px 0" }}
                       type="file"
                       accept=".jpg,.jpeg,.png"
                       onChange={(event) => {

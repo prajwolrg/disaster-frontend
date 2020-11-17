@@ -126,6 +126,7 @@ const getVMsForDistrict = (dispatch) => async (name) => {
 
 const addIncident = (dispatch) => async (values) => {
   dispatch({ type: "loading" });
+  delete values.imagesToDelete;
   const formData = new FormData();
   for (const key in values) {
     if (key === "images") {
@@ -179,6 +180,12 @@ const updateIncident = (dispatch) => async (id, values) => {
       if (images)
         for (let i = 0; i < images.length; i++) {
           formData.append("images", images[i]);
+        }
+    } else if (key === "imagesToDelete") {
+      let imagesToDelete = values.imagesToDelete.map((image) => image.value);
+      if (imagesToDelete)
+        for (let i = 0; i < imagesToDelete.length; i++) {
+          formData.append("imagesToDelete", imagesToDelete[i]);
         }
     } else formData.append(key, values[key]);
   }

@@ -51,7 +51,7 @@ export default function ButtonAppBar({
                                 </MenuItem>
                                 {disasterTypeNames &&
                                     disasterTypeNames.map((item) => (
-                                        <MenuItem value={item.disasterTypeName}>
+                                        <MenuItem key={item.disasterTypeName} value={item.disasterTypeName}>
                                             <Typography variant="h6">
                                                 {item.disasterTypeName}
                                             </Typography>
